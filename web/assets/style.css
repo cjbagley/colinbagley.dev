@@ -2,9 +2,16 @@
   --grid-max-width: 50rem;
   --grid-gutter: var(--space-s-l, clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem));
   --grid-columns: 12;
+
+  /* dark theme */
   --text-colour: color(display-p3 0.76371 0.97298 0.87022);
   --background-colour: color(display-p3 0.08527 0.06825 0.03322);
   --spacing: 3rem;
+
+  /* light theme */
+  /* --backgroud-colour: color(display-p3 0.76371 0.97298 0.87022); */
+  /* --text-colour: color(display-p3 0.04406 0.2954 0.37515); */
+  /* --date-colour: black */ 
 }
 
 body {
@@ -31,6 +38,7 @@ a {
 
 #site-head {
   display: flex;
+  padding-top: 20px;
   flex-direction: column;
   align-items: center;
   margin-bottom: var(--spacing);
@@ -47,7 +55,7 @@ a {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 #site-head img {
@@ -81,7 +89,7 @@ a {
 }
 
 .content-head time {
-  color: white;
+  color: var(--date-colour); 
   font-size: 1rem;
 }
 
