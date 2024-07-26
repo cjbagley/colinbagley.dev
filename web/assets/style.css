@@ -43,6 +43,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 10px;
     margin-bottom: var(--spacing);
 }
 
@@ -73,6 +74,7 @@ a {
     gap: 2rem;
     font-size: 1.2rem;
     text-wrap: nowrap;
+    padding: 0;
 }
 
 #theme-toggle {
@@ -88,9 +90,13 @@ a {
 }
 
 #theme-toggle input {
+    color: unset;
     margin: 0 5px;
 }
 
+input[name="theme"]:checked {
+    accent-color: purple;
+}
 
 .content-wrap {
     max-width: var(--grid-max-width);
@@ -124,3 +130,5 @@ a {
     height: 1px;
     overflow: hidden;
 }
+
+
