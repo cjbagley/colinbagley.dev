@@ -69,14 +69,22 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.WriteHeader(200)
-	tpl := template.Must(template.ParseFiles(getWebDirPath("test.html")))
+	tpl := template.Must(template.ParseFiles(getLayoutDirPath("main.html"), getPageDirPath("index.html")))
 	tpl.Execute(w, nil)
 }
 
-func getWebDirPath(template string) string {
+func getPageDirPath(template string) string {
 	if testing.Testing() {
-		return fmt.Sprintf("../../web/%s", template)
+		return fmt.Sprintf("../../web/pages/%s", template)
 	}
 
-	return fmt.Sprintf("./web/%s", template)
+	return fmt.Sprintf("./web/pages/%s", template)
+}
+
+func getLayoutDirPath(template string) string {
+	if testing.Testing() {
+		return fmt.Sprintf("../../web/layouts/%s", template)
+	}
+
+	return fmt.Sprintf("./web/layouts/%s", template)
 }
