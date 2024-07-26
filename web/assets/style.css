@@ -20,7 +20,7 @@ body {
 }
 
 
-body.dark-theme {
+body[data-theme="dark"] {
     --text-colour: color(display-p3 0.76371 0.97298 0.87022);
     --background-colour: color(display-p3 0.08527 0.06825 0.03322);
     --date-colour: white;
@@ -57,7 +57,7 @@ a {
 #site-head header {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 #site-head img {
@@ -78,24 +78,10 @@ a {
 }
 
 #theme-toggle {
+    background-color: inherit;
+    color: inherit;
     border: none;
     padding: 0;
-    display: flex;
-    gap: 10px;
-}
-
-#theme-toggle label {
-    display: flex;
-    flex-direction: row;
-}
-
-#theme-toggle input {
-    color: unset;
-    margin: 0 5px;
-}
-
-input[name="theme"]:checked {
-    accent-color: purple;
 }
 
 .content-wrap {
@@ -121,14 +107,3 @@ input[name="theme"]:checked {
     display: grid;
     gap: var(--grid-gutter);
 }
-
-.sr-only {
-    position: absolute;
-    left: -10000px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-}
-
-
