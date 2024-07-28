@@ -69,7 +69,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.WriteHeader(200)
-	tpl := template.Must(template.ParseFiles(getLayoutDirPath("main.gohtml"), getPageDirPath("index.gohtml")))
+	tpl := template.Must(template.ParseFiles(getLayoutDirPath("main.gohtml"), getPageDirPath("index.gohtml"), getLayoutDirPath("partials/article.gohtml")))
 	tpl.Execute(w, nil)
 }
 
