@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"github.com/cjbagley/colinbagley.dev/internal/data"
 	"html/template"
 	"log"
 	"net/http"
@@ -60,7 +61,6 @@ func StartServer(ctx context.Context, wg *sync.WaitGroup) {
 }
 
 func HandleIndex(w http.ResponseWriter, r *http.Request) {
-
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -71,6 +71,18 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 	tpl := template.Must(template.ParseFiles(getLayoutDirPath("main.gohtml"), getPageDirPath("index.gohtml"), getLayoutDirPath("partials/article.gohtml")))
 	tpl.Execute(w, nil)
+}
+
+func HandleArticle(article data.Article) http.HandlerFunc {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		w.Header().Set("Access-Control-Allow-Methods", "GET")
+		w.WriteHeader(200)
+		tpl := template.Must(template.ParseFiles(getLayoutDirPath("main.gohtml"), getPageDirPath("index.gohtml"), getLayoutDirPath("partials/article.gohtml")))
+		tpl.Execute(w, nil)
+	}
+
+	return http.HandlerFunc(fn)
 }
 
 func getPageDirPath(template string) string {
