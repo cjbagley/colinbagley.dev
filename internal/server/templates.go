@@ -2,10 +2,11 @@ package server
 
 import (
 	"fmt"
-	"github.com/cjbagley/colinbagley.dev/internal/data"
 	"html/template"
-	"io"
+	"net/http"
 	"testing"
+
+	"github.com/cjbagley/colinbagley.dev/internal/data"
 )
 
 type PageData struct {
@@ -49,11 +50,12 @@ func (a *articlePageTemplates) getData() PageData {
 	return PageData{Title: a.article.Title}
 }
 
-func WriteTemplate(writer io.Writer, templates pageTemplates) (*template.Template, error) {
+func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) (error) {
 	tpl := template.Must(template.ParseFiles(templates.getTemplates()...))
-	tpl.Execute(writer, templates.getData())
+	tpl.Execute(w, templates.getData())
+	w.Header().Set("Content-Type", "text/html")
 
-	return tpl, nil
+	return nil
 }
 
 func getPageDirPath(template string) string {

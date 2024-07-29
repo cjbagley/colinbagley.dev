@@ -19,5 +19,8 @@ func TestServer(t *testing.T) {
 		if res.Header().Get(middleware.SiteHeader) != middleware.SiteValue {
 			t.Errorf("Site header not found, got '%s'", res.Header().Get(middleware.SiteHeader))
 		}
+		if res.Header().Get("Content-Type") != "text/html" {
+			t.Errorf("Content Type header expected 'text/html', got '%s'", res.Header().Get("Content-Type"))
+		}
 	})
 }
