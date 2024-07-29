@@ -21,9 +21,9 @@ func AddRoutes(mux *http.ServeMux) {
 
 	var articles []data.Article
 	if articleJson, err := os.ReadFile("internal/data/articles.json"); err == nil {
-		fmt.Println(string(articleJson))
 		json.Unmarshal(articleJson, &articles)
 	}
+
 	if len(articles) > 0 {
 		for _, article := range articles {
 			h := HandleArticle(article)
