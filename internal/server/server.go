@@ -4,12 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/cjbagley/colinbagley.dev/internal/data"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"sync"
-	"testing"
 	"time"
 
 	"github.com/cjbagley/colinbagley.dev/internal/middleware"
@@ -69,8 +67,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.WriteHeader(200)
-	tpl := template.Must(template.ParseFiles(getLayoutDirPath("main.gohtml"), getPageDirPath("index.gohtml")))
-	tpl.Execute(w, nil)
+	WriteTemplate(w, &contentPageTemplates{path: "index.gohtml"})
 }
 
 func HandleArticle(article data.Article) http.HandlerFunc {
@@ -78,25 +75,8 @@ func HandleArticle(article data.Article) http.HandlerFunc {
 		w.Header().Set("Content-Type", "text/html")
 		w.Header().Set("Access-Control-Allow-Methods", "GET")
 		w.WriteHeader(200)
-		tpl := template.Must(template.ParseFiles(getLayoutDirPath("main.gohtml"), getPageDirPath("articles/article-1.gohtml"), getLayoutDirPath("partials/article.gohtml")))
-		tpl.Execute(w, nil)
+		WriteTemplate(w, &articlePageTemplates{article: article})
 	}
 
-	return http.HandlerFunc(fn)
-}
-
-func getPageDirPath(template string) string {
-	if testing.Testing() {
-		return fmt.Sprintf("../../web/pages/%s", template)
-	}
-
-	return fmt.Sprintf("./web/pages/%s", template)
-}
-
-func getLayoutDirPath(template string) string {
-	if testing.Testing() {
-		return fmt.Sprintf("../../web/layouts/%s", template)
-	}
-
-	return fmt.Sprintf("./web/layouts/%s", template)
+	return fn
 }
