@@ -67,7 +67,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.WriteHeader(200)
-	WriteTemplate(w, &contentPageTemplates{path: "index.gohtml"})
+	WriteTemplate(w, &contentPageTemplates{path: "index.gohtml", title: "Hello!"})
 }
 
 func HandleArticle(article data.Article) http.HandlerFunc {

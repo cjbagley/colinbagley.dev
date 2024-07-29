@@ -8,12 +8,18 @@ import (
 	"testing"
 )
 
+type PageData struct {
+	Title string
+}
+
 type pageTemplates interface {
 	getTemplates() []string
+	getData() PageData
 }
 
 type contentPageTemplates struct {
-	path string
+	path  string
+	title string
 }
 
 func (c *contentPageTemplates) getTemplates() []string {
@@ -21,6 +27,10 @@ func (c *contentPageTemplates) getTemplates() []string {
 		getLayoutDirPath("main.gohtml"),
 		getPageDirPath(c.path),
 	}
+}
+
+func (c *contentPageTemplates) getData() PageData {
+	return PageData{Title: c.title}
 }
 
 type articlePageTemplates struct {
@@ -35,9 +45,14 @@ func (a *articlePageTemplates) getTemplates() []string {
 	}
 }
 
+func (a *articlePageTemplates) getData() PageData {
+	return PageData{Title: a.article.Title}
+}
+
 func WriteTemplate(writer io.Writer, templates pageTemplates) (*template.Template, error) {
 	tpl := template.Must(template.ParseFiles(templates.getTemplates()...))
-	tpl.Execute(writer, nil)
+	tpl.Execute(writer, templates.getData())
+
 	return tpl, nil
 }
 

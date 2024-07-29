@@ -1,7 +1,8 @@
+{{define "title"}}{{.Title}}{{end}}
 {{define "body"}}
     <article>
         <header class="content-head">
-            <h2>{{template "article-title" . }}</h2>
+            <h2>{{ .Title}}</h2>
             <time datetime="2024-09-25">25th September 2024</time>
         </header>
         <div class="content">
