@@ -1,11 +1,9 @@
 package server
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/cjbagley/colinbagley.dev/internal/data"
 	"net/http"
-	"os"
 )
 
 type Route struct {
@@ -16,13 +14,11 @@ type Route struct {
 
 func AddRoutes(mux *http.ServeMux) {
 	routes := []Route{
+		{http.MethodGet, "/articles", HandleArticles},
 		{http.MethodGet, "/", HandleIndex},
 	}
 
-	var articles []data.Article
-	if articleJson, err := os.ReadFile("internal/data/articles.json"); err == nil {
-		json.Unmarshal(articleJson, &articles)
-	}
+	articles := data.GetArticles()
 
 	if len(articles) > 0 {
 		for _, article := range articles {

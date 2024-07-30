@@ -10,7 +10,8 @@ import (
 )
 
 type PageData struct {
-	Title string
+	Title    string
+	Articles []data.Article
 }
 
 type pageTemplates interface {
@@ -19,8 +20,9 @@ type pageTemplates interface {
 }
 
 type contentPageTemplates struct {
-	path  string
-	title string
+	path     string
+	title    string
+	articles []data.Article
 }
 
 func (c *contentPageTemplates) getTemplates() []string {
@@ -31,7 +33,7 @@ func (c *contentPageTemplates) getTemplates() []string {
 }
 
 func (c *contentPageTemplates) getData() PageData {
-	return PageData{Title: c.title}
+	return PageData{Title: c.title, Articles: c.articles}
 }
 
 type articlePageTemplates struct {

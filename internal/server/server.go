@@ -67,6 +67,13 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	WriteHttpResponse(w, &contentPageTemplates{path: "index.gohtml", title: "Hello!"})
 }
 
+func HandleArticles(w http.ResponseWriter, r *http.Request) {
+
+	articles := data.GetArticles()
+
+	WriteHttpResponse(w, &contentPageTemplates{path: "articles.gohtml", title: "Articles", articles: articles})
+}
+
 func HandleArticle(article data.Article) http.HandlerFunc {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		WriteHttpResponse(w, &articlePageTemplates{article: article})

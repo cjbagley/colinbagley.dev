@@ -112,3 +112,9 @@ main {
     display: grid;
     gap: var(--grid-gutter);
 }
+
+#articles-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

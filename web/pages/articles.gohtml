@@ -1,0 +1,18 @@
+{{define "title"}}{{.Title}}{{end}}
+{{define "body"}}
+    <header class="content-head">
+        <h2>{{.Title}}</h2>
+    </header>
+    <div class="content">
+        <p>This is the articles page test</p>
+        {{if ne (len .Articles) 0}}
+            <nav id="articles-nav">
+                <ul>
+                    {{ range .Articles }}
+                        <li><a href="{{.Url}}">{{.Title}}</a></li>
+                    {{end}}
+                </ul>
+            </nav>
+        {{end}}
+    </div>
+{{end}}

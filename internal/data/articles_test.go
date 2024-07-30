@@ -27,8 +27,8 @@ func TestArticles(t *testing.T) {
 		t.Errorf("Could not unmarshal json: %v", err)
 		return
 	}
-	list := GetArticleMap(articles)
-	if len(list) != 2 {
-		t.Errorf("Articles should have 2 items, got %v", len(list))
+
+	if len(articles) != 2 {
+		t.Errorf("Articles should have 2 items, got %v", len(articles))
 	}
 }

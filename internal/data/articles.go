@@ -1,5 +1,10 @@
 package data
 
+import (
+	"encoding/json"
+	"os"
+)
+
 type Article struct {
 	Url       string `json:"url"`
 	Title     string `json:"title"`
@@ -7,14 +12,11 @@ type Article struct {
 	Favourite bool   `json:"favourite"`
 }
 
-func GetArticleMap(articles []Article) map[string]Article {
-	articleMap := make(map[string]Article)
-	for _, article := range articles {
-		if article.Url == "" {
-			continue
-		}
-		articleMap[article.Url] = article
+func GetArticles() []Article {
+	var articles []Article
+	if articleJson, err := os.ReadFile("internal/data/articles.json"); err == nil {
+		json.Unmarshal(articleJson, &articles)
 	}
 
-	return articleMap
+	return articles
 }
