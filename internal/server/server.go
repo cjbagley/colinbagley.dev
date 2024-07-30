@@ -58,7 +58,6 @@ func StartServer(ctx context.Context, wg *sync.WaitGroup) {
 	}()
 }
 
-
 func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)

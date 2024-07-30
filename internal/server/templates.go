@@ -50,7 +50,7 @@ func (a *articlePageTemplates) getData() PageData {
 	return PageData{Title: a.article.Title}
 }
 
-func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) (error) {
+func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) error {
 	tpl := template.Must(template.ParseFiles(templates.getTemplates()...))
 	tpl.Execute(w, templates.getData())
 	w.Header().Set("Content-Type", "text/html")
