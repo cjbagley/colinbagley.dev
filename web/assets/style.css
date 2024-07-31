@@ -89,6 +89,10 @@ a {
     cursor: pointer;
 }
 
+#github-link {
+    font-size: 20px;
+}
+
 main {
     max-width: var(--grid-max-width);
     padding-inline: var(--grid-gutter);
