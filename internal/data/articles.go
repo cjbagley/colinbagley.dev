@@ -8,6 +8,7 @@ import (
 type Article struct {
 	Url       string `json:"url"`
 	Title     string `json:"title"`
+	Published string `json:"published"`
 	Template  string `json:"template"`
 	Favourite bool   `json:"favourite"`
 }
