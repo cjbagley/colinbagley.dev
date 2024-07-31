@@ -3,6 +3,7 @@ package data
 import (
 	"encoding/json"
 	"os"
+	"testing"
 )
 
 type Article struct {
@@ -15,7 +16,12 @@ type Article struct {
 
 func GetArticles() []Article {
 	var articles []Article
-	if articleJson, err := os.ReadFile("internal/data/articles.json"); err == nil {
+	path := "./internal/data/articles.json"
+	if testing.Testing() {
+		path = "../../internal/data/articles.json"
+	}
+
+	if articleJson, err := os.ReadFile(path); err == nil {
 		json.Unmarshal(articleJson, &articles)
 	}
 
