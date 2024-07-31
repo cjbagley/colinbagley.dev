@@ -3,7 +3,7 @@
     <article>
         <header class="content-head">
             <h2>{{ .Title}}</h2>
-            <time datetime="2024-09-25">25th September 2024</time>
+            {{ template "published" . }}
         </header>
         <div class="content">
             {{template "article-content" .}}
