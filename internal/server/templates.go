@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
 	"testing"
 	"time"
 
@@ -79,22 +80,28 @@ func (a *articlePageTemplates) getData() PageData {
 	return PageData{Title: a.article.Title, Published: a.article.Published}
 }
 
-func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) error {
+func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) {
 	funcs := template.FuncMap{
 		"textDate": GetTextDate,
 	}
 
-	tpl, err := template.New("main.gohtml").Funcs(funcs).ParseFiles(templates.getTemplates()...)
-
+	tpl, err := template.New("main2.gohtml").Funcs(funcs).ParseFiles(templates.getTemplates()...)
 	if err != nil {
-		fmt.Println(err)
-		return nil
+		serveErrorPage(w)
 	}
 
-	tpl.Execute(w, templates.getData())
-	w.Header().Set("Content-Type", "text/html")
+	err = tpl.Execute(w, templates.getData())
+	if err != nil {
+		serveErrorPage(w)
+	}
 
-	return nil
+	w.Header().Set("Content-Type", "text/html")
+}
+
+func serveErrorPage(w http.ResponseWriter) {
+	f, _ := os.ReadFile(getPageDirPath("500.html"))
+	w.Write(f)
+	w.WriteHeader(http.StatusInternalServerError)
 }
 
 func getPageDirPath(template string) string {
