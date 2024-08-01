@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/cjbagley/colinbagley.dev/internal/data"
 )
@@ -15,8 +16,28 @@ type PageData struct {
 	Articles  []data.Article
 }
 
-func PrintDate(date string) string {
-	return date
+func GetTextDate(date string) string {
+	if date == "" {
+		return ""
+	}
+	t, err := time.Parse("2006-1-2", date)
+	if err != nil {
+		return ""
+	}
+
+	var suffix string
+	switch t.Day() {
+	case 1, 21, 31:
+		suffix = "st"
+	case 2, 22:
+		suffix = "nd"
+	case 3, 23:
+		suffix = "rd"
+	default:
+		suffix = "th"
+	}
+
+	return t.Format(fmt.Sprintf("2%s January 2006", suffix))
 }
 
 type pageTemplates interface {
@@ -60,7 +81,7 @@ func (a *articlePageTemplates) getData() PageData {
 
 func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) error {
 	funcs := template.FuncMap{
-		"date": PrintDate,
+		"textDate": GetTextDate,
 	}
 
 	tpl, err := template.New("main.gohtml").Funcs(funcs).ParseFiles(templates.getTemplates()...)
