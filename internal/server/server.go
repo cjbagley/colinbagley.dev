@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/cjbagley/colinbagley.dev/internal/data"
 	"log"
@@ -39,10 +40,10 @@ func StartServer(ctx context.Context, wg *sync.WaitGroup) {
 
 	httpServer := NewServer()
 
-	// Adapted fromhttps://medium.com/@dsilverdi/graceful-shutdown-in-go-a-polite-way-to-end-programs-6af16e025549
+	// Adapted from https://medium.com/@dsilverdi/graceful-shutdown-in-go-a-polite-way-to-end-programs-6af16e025549
 	go func() {
 		log.Printf("Website Up - listening on %s\n", httpServer.Addr)
-		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			fmt.Fprintf(os.Stderr, "error listening and serving: %s\n", err)
 		}
 		select {
@@ -67,6 +68,7 @@ func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	WriteHttpResponse(w, &contentPageTemplates{path: "index.gohtml", title: "Hello!"})
 }
 
+//goland:noinspection GoUnusedParameter
 func HandleArticles(w http.ResponseWriter, r *http.Request) {
 
 	articles := data.GetArticles()
