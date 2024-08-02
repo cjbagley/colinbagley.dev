@@ -15,14 +15,18 @@ type Article struct {
 }
 
 func GetArticles() []Article {
-	var articles []Article
 	path := "./internal/data/articles.json"
 	if testing.Testing() {
 		path = "../../internal/data/articles.json"
 	}
 
+	var articles []Article
 	if articleJson, err := os.ReadFile(path); err == nil {
-		json.Unmarshal(articleJson, &articles)
+		err := json.Unmarshal(articleJson, &articles)
+		if err != nil {
+			// Still allow website to function
+			return articles
+		}
 	}
 
 	return articles

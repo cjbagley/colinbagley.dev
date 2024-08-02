@@ -85,14 +85,16 @@ func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) {
 		"textDate": GetTextDate,
 	}
 
-	tpl, err := template.New("main2.gohtml").Funcs(funcs).ParseFiles(templates.getTemplates()...)
+	tpl, err := template.New("main.gohtml").Funcs(funcs).ParseFiles(templates.getTemplates()...)
 	if err != nil {
 		serveErrorPage(w)
+		return
 	}
 
 	err = tpl.Execute(w, templates.getData())
 	if err != nil {
 		serveErrorPage(w)
+		return
 	}
 
 	w.Header().Set("Content-Type", "text/html")
@@ -101,7 +103,6 @@ func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) {
 func serveErrorPage(w http.ResponseWriter) {
 	f, _ := os.ReadFile(getPageDirPath("500.html"))
 	w.Write(f)
-	w.WriteHeader(http.StatusInternalServerError)
 }
 
 func getPageDirPath(template string) string {
