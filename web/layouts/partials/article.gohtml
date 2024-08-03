@@ -3,7 +3,13 @@
     <article>
         <header class="content-head">
             <h2>{{ .Title}}</h2>
-            {{ template "published" . }}
+
+            <div class="content-meta">
+                {{ template "published" . }}
+                {{ if ne .Updated "" }}
+                    {{ template "updated" . }}
+                {{ end }}
+            </div>
         </header>
         <div class="content">
             {{template "article-content" .}}

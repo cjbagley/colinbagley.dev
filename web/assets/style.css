@@ -89,10 +89,6 @@ a {
     cursor: pointer;
 }
 
-#github-link {
-    font-size: 20px;
-}
-
 main {
     max-width: var(--grid-max-width);
     padding-inline: var(--grid-gutter);
@@ -100,14 +96,20 @@ main {
 }
 
 .content-head {
+    margin-bottom: var(--spacing);
+}
+
+.content-head h2 {
     display: flex;
     flex-direction: column;
-    margin-bottom: var(--spacing);
     padding-bottom: 1rem;
     border-bottom: 2px dotted;
 }
 
-.content-head time {
+.content-meta {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
     color: var(--date-colour);
     font-size: 1rem;
 }

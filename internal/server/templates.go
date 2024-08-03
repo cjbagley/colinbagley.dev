@@ -14,6 +14,7 @@ import (
 type PageData struct {
 	Title     string
 	Published string
+	Updated   string
 	Articles  []data.Article
 }
 
@@ -73,11 +74,12 @@ func (a *articlePageTemplates) getTemplates() []string {
 		getPageDirPath("articles/" + a.article.Template + ".gohtml"),
 		getLayoutDirPath("partials/article.gohtml"),
 		getLayoutDirPath("partials/published.gohtml"),
+		getLayoutDirPath("partials/updated.gohtml"),
 	}
 }
 
 func (a *articlePageTemplates) getData() PageData {
-	return PageData{Title: a.article.Title, Published: a.article.Published}
+	return PageData{Title: a.article.Title, Published: a.article.Published, Updated: a.article.Updated}
 }
 
 func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) {
@@ -87,12 +89,14 @@ func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) {
 
 	tpl, err := template.New("main.gohtml").Funcs(funcs).ParseFiles(templates.getTemplates()...)
 	if err != nil {
+		fmt.Println(err)
 		serveErrorPage(w)
 		return
 	}
 
 	err = tpl.Execute(w, templates.getData())
 	if err != nil {
+		fmt.Println(err)
 		serveErrorPage(w)
 		return
 	}
