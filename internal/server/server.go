@@ -4,9 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
-	"os"
 	"sync"
 	"time"
 
@@ -41,18 +39,18 @@ func StartServer(ctx context.Context, wg *sync.WaitGroup) {
 
 	// Adapted from https://medium.com/@dsilverdi/graceful-shutdown-in-go-a-polite-way-to-end-programs-6af16e025549
 	go func() {
-		log.Printf("Website Up - listening on %s\n", httpServer.Addr)
+		LogInfo(fmt.Sprintf("Website Up - listening on %s", httpServer.Addr))
 		if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			fmt.Fprintf(os.Stderr, "error listening and serving: %s\n", err)
+			LogError(errors.New(fmt.Sprintf("error listening and serving - %s", err.Error())))
 		}
 		select {
 		case <-ctx.Done():
-			fmt.Printf("\nShutting down server\n")
+			LogInfo("Shutting down server")
 			shutdownCtx, cancelShutdown := context.WithTimeout(context.Background(), 20*time.Second)
 			defer cancelShutdown()
 
 			if err := httpServer.Shutdown(shutdownCtx); err != nil {
-				fmt.Printf("\nerror shutting down server: %s\n", err)
+				LogError(errors.New(fmt.Sprintf("error shutting down server - %s", err.Error())))
 			}
 		}
 	}()

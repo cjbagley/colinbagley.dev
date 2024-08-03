@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"github.com/cjbagley/colinbagley.dev/internal/server"
 	"os"
 	"os/signal"
@@ -21,7 +20,7 @@ func run() error {
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 	<-signalChan
 
-	fmt.Printf("\nClosing...\n")
+	server.LogInfo("Closing server...")
 
 	cancel()
 	wg.Wait()
@@ -31,7 +30,7 @@ func run() error {
 
 func main() {
 	if err := run(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		server.LogError(err)
 		os.Exit(1)
 	}
 }

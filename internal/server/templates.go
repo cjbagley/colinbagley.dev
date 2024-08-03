@@ -89,14 +89,14 @@ func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) {
 
 	tpl, err := template.New("main.gohtml").Funcs(funcs).ParseFiles(templates.getTemplates()...)
 	if err != nil {
-		fmt.Println(err)
+		LogError(err)
 		serveErrorPage(w)
 		return
 	}
 
 	err = tpl.Execute(w, templates.getData())
 	if err != nil {
-		fmt.Println(err)
+		LogError(err)
 		serveErrorPage(w)
 		return
 	}
