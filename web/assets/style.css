@@ -81,6 +81,15 @@ a {
     padding: 0;
 }
 
+/*Set high of header icons for consistency of svg, which is set to 100% */
+#github-link, #theme-toggle {
+    height: 33px;
+}
+
+#site-head svg {
+    height: 100%;
+}
+
 #theme-toggle {
     background-color: inherit;
     color: inherit;
