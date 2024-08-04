@@ -105,9 +105,13 @@ func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) {
 }
 
 func serveErrorPage(w http.ResponseWriter) {
-	f, _ := os.ReadFile(getPageDirPath("500.html"))
-	_, err := w.Write(f)
+	f, err := os.ReadFile(getPageDirPath("500.html"))
 	if err != nil {
+		LogError(err)
+		http.Error(w, "Something went wrong", http.StatusInternalServerError)
+	}
+
+	if _, err = w.Write(f); err != nil {
 		LogError(err)
 		http.Error(w, "Something went wrong", http.StatusInternalServerError)
 	}
