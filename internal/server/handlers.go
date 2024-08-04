@@ -7,7 +7,8 @@ import (
 
 func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
-		http.NotFound(w, r)
+		w.WriteHeader(http.StatusNotFound)
+		WriteHttpResponse(w, &contentPageTemplates{path: "404.gohtml", title: "Page Not Found"})
 		return
 	}
 
