@@ -7,12 +7,12 @@ import (
 )
 
 type Route struct {
-	method  string
-	path    string
-	handler http.HandlerFunc
+	Method  string
+	Path    string
+	Handler http.HandlerFunc
 }
 
-func AddRoutes(mux *http.ServeMux) {
+func GetRoutes() []Route {
 	routes := []Route{
 		{http.MethodGet, "/articles", HandleArticles},
 		{http.MethodGet, "/", HandleIndex},
@@ -27,7 +27,12 @@ func AddRoutes(mux *http.ServeMux) {
 		}
 	}
 
+	return routes
+}
+
+func AddRoutesToMux(mux *http.ServeMux) {
+	routes := GetRoutes()
 	for _, r := range routes {
-		mux.HandleFunc(fmt.Sprintf("%s %s", r.method, r.path), r.handler)
+		mux.HandleFunc(fmt.Sprintf("%s %s", r.Method, r.Path), r.Handler)
 	}
 }

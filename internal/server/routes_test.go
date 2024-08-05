@@ -1,6 +1,7 @@
 package server_test
 
 import (
+	"fmt"
 	"net/http"
 	"testing"
 
@@ -8,12 +9,18 @@ import (
 )
 
 func TestRoutes(t *testing.T) {
-	t.Run("Homepage loads", func(t *testing.T) {
-		res := server.MockServerRequest(http.MethodGet, "/", nil)
-		expectedStatus := http.StatusOK
+	t.Run("All pages load", func(t *testing.T) {
+		routes := server.GetRoutes()
 
-		if res.Code != expectedStatus {
-			t.Errorf("Status Code: got %d, want %d", res.Code, expectedStatus)
+		for _, r := range routes {
+			t.Log(fmt.Sprintf("Testing route: %s %s", r.Method, r.Path))
+			res := server.MockServerRequest(r.Method, r.Path, nil)
+
+			expectedStatus := http.StatusOK
+
+			if res.Code != expectedStatus {
+				t.Errorf("Status Code: got %d, want %d", res.Code, expectedStatus)
+			}
 		}
 	})
 	t.Run("404 on unmatched route", func(t *testing.T) {

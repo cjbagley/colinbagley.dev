@@ -17,7 +17,7 @@ func NewServer() http.Server {
 	fs := http.FileServer(http.Dir("./web/assets/"))
 	mux.Handle("GET /assets/", http.StripPrefix("/assets/", fs))
 
-	AddRoutes(mux)
+	AddRoutesToMux(mux)
 
 	var handler http.Handler = mux
 	handler = middleware.Cors(handler)
