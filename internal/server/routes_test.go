@@ -21,6 +21,10 @@ func TestRoutes(t *testing.T) {
 			if res.Code != expectedStatus {
 				t.Errorf("Status Code: got %d, want %d", res.Code, expectedStatus)
 			}
+
+			if res.Body.String() == "" {
+				t.Errorf("Page for '%s' has no body content", r.Path)
+			}
 		}
 	})
 	t.Run("404 on unmatched route", func(t *testing.T) {

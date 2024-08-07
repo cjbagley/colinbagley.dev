@@ -14,8 +14,8 @@ type Route struct {
 
 func GetRoutes() []Route {
 	routes := []Route{
-		{http.MethodGet, "/articles", HandleArticles},
 		{http.MethodGet, "/", HandleIndex},
+		{http.MethodGet, "/articles", HandleArticles},
 	}
 
 	articles := data.GetArticles()
