@@ -6,7 +6,7 @@ import (
 )
 
 func TestArticles(t *testing.T) {
-	rawJson := []byte(`
+	rawJSON := []byte(`
 		[
 		  {
 			"url": "article-1",
@@ -22,7 +22,7 @@ func TestArticles(t *testing.T) {
 	`)
 
 	var articles []Article
-	err := json.Unmarshal(rawJson, &articles)
+	err := json.Unmarshal(rawJSON, &articles)
 	if err != nil {
 		t.Errorf("Could not unmarshal json: %v", err)
 		return

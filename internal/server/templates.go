@@ -82,7 +82,7 @@ func (a *articlePageTemplates) getData() PageData {
 	return PageData{Title: a.article.Title, Published: a.article.Published, Updated: a.article.Updated}
 }
 
-func WriteHttpResponse(w http.ResponseWriter, templates pageTemplates) {
+func WriteHTTPResponse(w http.ResponseWriter, templates pageTemplates) {
 	funcs := template.FuncMap{
 		"textDate": GetTextDate,
 	}

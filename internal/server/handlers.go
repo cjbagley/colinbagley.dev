@@ -8,23 +8,22 @@ import (
 func HandleIndex(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		w.WriteHeader(http.StatusNotFound)
-		WriteHttpResponse(w, &contentPageTemplates{path: "404.gohtml", title: "Page Not Found"})
+		WriteHTTPResponse(w, &contentPageTemplates{path: "404.gohtml", title: "Page Not Found"})
 		return
 	}
 
-	WriteHttpResponse(w, &contentPageTemplates{path: "index.gohtml", title: "Hello!"})
+	WriteHTTPResponse(w, &contentPageTemplates{path: "index.gohtml", title: "Hello!"})
 }
 
-//goland:noinspection GoUnusedParameter
-func HandleArticles(w http.ResponseWriter, r *http.Request) {
+func HandleArticles(w http.ResponseWriter, _ *http.Request) {
 	articles := data.GetArticles()
 
-	WriteHttpResponse(w, &contentPageTemplates{path: "articles.gohtml", title: "Articles", articles: articles})
+	WriteHTTPResponse(w, &contentPageTemplates{path: "articles.gohtml", title: "Articles", articles: articles})
 }
 
 func HandleArticle(article data.Article) http.HandlerFunc {
-	fn := func(w http.ResponseWriter, r *http.Request) {
-		WriteHttpResponse(w, &articlePageTemplates{article: article})
+	fn := func(w http.ResponseWriter, _ *http.Request) {
+		WriteHTTPResponse(w, &articlePageTemplates{article: article})
 	}
 
 	return fn

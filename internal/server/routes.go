@@ -23,7 +23,7 @@ func GetRoutes() []Route {
 	if len(articles) > 0 {
 		for _, article := range articles {
 			h := HandleArticle(article)
-			routes = append(routes, Route{http.MethodGet, "/" + article.Url, h})
+			routes = append(routes, Route{http.MethodGet, "/" + article.URL, h})
 		}
 	}
 

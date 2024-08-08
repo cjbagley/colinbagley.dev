@@ -7,7 +7,7 @@ import (
 )
 
 type Article struct {
-	Url       string `json:"url"`
+	URL       string `json:"url"`
 	Title     string `json:"title"`
 	Published string `json:"published"`
 	Updated   string `json:"updated"`
@@ -22,8 +22,8 @@ func GetArticles() []Article {
 	}
 
 	var articles []Article
-	if articleJson, err := os.ReadFile(path); err == nil {
-		err := json.Unmarshal(articleJson, &articles)
+	if articleJSON, err := os.ReadFile(path); err == nil {
+		err := json.Unmarshal(articleJSON, &articles)
 		if err != nil {
 			// Still allow website to function
 			return articles
