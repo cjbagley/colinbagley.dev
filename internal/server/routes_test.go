@@ -12,7 +12,7 @@ func TestRoutes(t *testing.T) {
 		routes := server.GetRoutes()
 
 		for _, r := range routes {
-			t.Logf("Testing route: %s %s", r.Method, r.Path)
+			t.Logf("Testing Route: %s %s", r.Method, r.Path)
 			res := server.MockServerRequest(r.Method, r.Path, nil)
 
 			expectedStatus := http.StatusOK
@@ -22,11 +22,11 @@ func TestRoutes(t *testing.T) {
 			}
 
 			if res.Body.String() == "" {
-				t.Errorf("Page for '%s' has no body content", r.Path)
+				t.Errorf("page for '%s' has no body content", r.Path)
 			}
 		}
 	})
-	t.Run("404 on unmatched route", func(t *testing.T) {
+	t.Run("404 on unmatched Route", func(t *testing.T) {
 		res := server.MockServerRequest(http.MethodGet, "/this-page-does-not-exist-asdf", nil)
 		expectedStatus := http.StatusNotFound
 

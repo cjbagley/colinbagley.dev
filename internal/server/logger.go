@@ -28,12 +28,14 @@ func getLogger() *log.Logger {
 	return l
 }
 
+// LogError adds an error message to the logger instance
 func LogError(err error) {
 	l = getLogger()
 	l.SetPrefix("Server Error: ")
 	l.Println(err)
 }
 
+// LogInfo adds an info message to the logger instance
 func LogInfo(msg string) {
 	l = getLogger()
 	l.SetPrefix("Server Info: ")

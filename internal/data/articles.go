@@ -1,3 +1,4 @@
+// Package data houses structs and methods for website data
 package data
 
 import (
@@ -6,6 +7,7 @@ import (
 	"testing"
 )
 
+// Article data structure
 type Article struct {
 	URL       string `json:"url"`
 	Title     string `json:"title"`
@@ -15,6 +17,7 @@ type Article struct {
 	Favourite bool   `json:"favourite"`
 }
 
+// GetArticles returns all available articles for the website
 func GetArticles() []Article {
 	path := "./internal/data/articles.json"
 	if testing.Testing() {

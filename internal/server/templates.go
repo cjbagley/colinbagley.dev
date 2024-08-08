@@ -11,13 +11,16 @@ import (
 	"github.com/cjbagley/colinbagley.dev/internal/data"
 )
 
-type PageData struct {
+type page struct {
 	Title     string
 	Published string
 	Updated   string
 	Articles  []data.Article
 }
 
+// GetTextDate takes a date in the format 2006-1-2 and
+// formats it to a full text string, for example
+// 8th August 2024
 func GetTextDate(date string) string {
 	if date == "" {
 		return ""
@@ -44,7 +47,7 @@ func GetTextDate(date string) string {
 
 type pageTemplates interface {
 	getTemplates() []string
-	getData() PageData
+	getData() page
 }
 
 type contentPageTemplates struct {
@@ -60,8 +63,8 @@ func (c *contentPageTemplates) getTemplates() []string {
 	}
 }
 
-func (c *contentPageTemplates) getData() PageData {
-	return PageData{Title: c.title, Articles: c.articles}
+func (c *contentPageTemplates) getData() page {
+	return page{Title: c.title, Articles: c.articles}
 }
 
 type articlePageTemplates struct {
@@ -78,10 +81,11 @@ func (a *articlePageTemplates) getTemplates() []string {
 	}
 }
 
-func (a *articlePageTemplates) getData() PageData {
-	return PageData{Title: a.article.Title, Published: a.article.Published, Updated: a.article.Updated}
+func (a *articlePageTemplates) getData() page {
+	return page{Title: a.article.Title, Published: a.article.Published, Updated: a.article.Updated}
 }
 
+// WriteHTTPResponse writes the given templates to the HTTP response writer
 func WriteHTTPResponse(w http.ResponseWriter, templates pageTemplates) {
 	funcs := template.FuncMap{
 		"textDate": GetTextDate,

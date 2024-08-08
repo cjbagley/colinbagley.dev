@@ -1,12 +1,16 @@
+// Package middleware adds any website middleware to http.Handler
 package middleware
 
 import "net/http"
 
 const (
+	// SiteHeader is a unique HTTP header for the site
 	SiteHeader = "colinbagley.dev"
-	SiteValue  = "UP"
+	// SiteValue is the value for the unique site header
+	SiteValue = "UP"
 )
 
+// Cors adds the CORS HTTP headers
 func Cors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")

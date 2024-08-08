@@ -1,3 +1,4 @@
+// Package server holds all HTTP server related logic
 package server
 
 import (
@@ -5,23 +6,23 @@ import (
 	"net/http"
 )
 
-func HandleIndex(w http.ResponseWriter, r *http.Request) {
+func handleIndex(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		w.WriteHeader(http.StatusNotFound)
-		WriteHTTPResponse(w, &contentPageTemplates{path: "404.gohtml", title: "Page Not Found"})
+		WriteHTTPResponse(w, &contentPageTemplates{path: "404.gohtml", title: "page Not Found"})
 		return
 	}
 
 	WriteHTTPResponse(w, &contentPageTemplates{path: "index.gohtml", title: "Hello!"})
 }
 
-func HandleArticles(w http.ResponseWriter, _ *http.Request) {
+func handleArticles(w http.ResponseWriter, _ *http.Request) {
 	articles := data.GetArticles()
 
 	WriteHTTPResponse(w, &contentPageTemplates{path: "articles.gohtml", title: "Articles", articles: articles})
 }
 
-func HandleArticle(article data.Article) http.HandlerFunc {
+func handleArticle(article data.Article) http.HandlerFunc {
 	fn := func(w http.ResponseWriter, _ *http.Request) {
 		WriteHTTPResponse(w, &articlePageTemplates{article: article})
 	}

@@ -1,3 +1,4 @@
+// Entry point for the application, which starts the HTTP server for the website
 package main
 
 import (

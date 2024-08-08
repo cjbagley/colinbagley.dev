@@ -11,6 +11,7 @@ import (
 	"github.com/cjbagley/colinbagley.dev/internal/middleware"
 )
 
+// NewServer returns a new HTTP server instance
 func NewServer() http.Server {
 	mux := http.NewServeMux()
 
@@ -32,6 +33,7 @@ func NewServer() http.Server {
 	}
 }
 
+// StartServer starts an HTTP server
 func StartServer(ctx context.Context, wg *sync.WaitGroup) {
 	defer wg.Done()
 
