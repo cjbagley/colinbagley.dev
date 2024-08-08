@@ -1,7 +1,6 @@
 package server_test
 
 import (
-	"fmt"
 	"net/http"
 	"testing"
 
@@ -13,7 +12,7 @@ func TestRoutes(t *testing.T) {
 		routes := server.GetRoutes()
 
 		for _, r := range routes {
-			t.Log(fmt.Sprintf("Testing route: %s %s", r.Method, r.Path))
+			t.Logf("Testing route: %s %s", r.Method, r.Path)
 			res := server.MockServerRequest(r.Method, r.Path, nil)
 
 			expectedStatus := http.StatusOK

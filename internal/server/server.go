@@ -41,17 +41,16 @@ func StartServer(ctx context.Context, wg *sync.WaitGroup) {
 	go func() {
 		LogInfo(fmt.Sprintf("Website Up - listening on %s", httpServer.Addr))
 		if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			LogError(errors.New(fmt.Sprintf("error listening and serving - %s", err.Error())))
+			LogError(fmt.Errorf("error listening and serving - %s", err.Error()))
 		}
-		select {
-		case <-ctx.Done():
-			LogInfo("Shutting down server")
-			shutdownCtx, cancelShutdown := context.WithTimeout(context.Background(), 20*time.Second)
-			defer cancelShutdown()
 
-			if err := httpServer.Shutdown(shutdownCtx); err != nil {
-				LogError(errors.New(fmt.Sprintf("error shutting down server - %s", err.Error())))
-			}
+		<-ctx.Done()
+		LogInfo("Shutting down server")
+		shutdownCtx, cancelShutdown := context.WithTimeout(context.Background(), 20*time.Second)
+		defer cancelShutdown()
+
+		if err := httpServer.Shutdown(shutdownCtx); err != nil {
+			LogError(fmt.Errorf("error shutting down server - %s", err.Error()))
 		}
 	}()
 }
